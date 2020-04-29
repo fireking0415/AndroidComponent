@@ -17,4 +17,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="跳转ModuleB" />
+
+    <Button
+        android:id="@+id/gotoLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="登录App" />
 </LinearLayout>
