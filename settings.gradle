@@ -1,0 +1,5 @@
+rootProject.name='AndroidComponent'
+include ':app'
+include ':modulea'
+include ':moduleb'
+include ':commons'
