@@ -3,7 +3,13 @@
     package="org.fireking.moduleb">
 
     <application>
-        <activity android:name=".ui.MainActivity" />
+        <activity
+            android:name=".ui.MainActivity"
+            android:theme="@style/b_NoActionBar" />
+
+        <meta-data
+            android:name="org.fireking.moduleb.ModelBApplicationDelegate"
+            android:value="ConfigModule" />
     </application>
 
 </manifest>

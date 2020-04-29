@@ -5,9 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.gyf.barlibrary.ImmersionBar;
 
 import org.fireking.commons.mvp.BaseActivity;
 import org.fireking.commons.mvp.InjectPresenter;
@@ -18,13 +19,20 @@ import org.fireking.moduleb.data.ZhihuPresenter;
 
 import java.util.List;
 
+import eightbitlab.com.blurview.BlurView;
+import eightbitlab.com.blurview.RenderScriptBlur;
+
 @Route(path = "/b/main")
 public class MainActivity extends BaseActivity implements ZhihuContact.View {
 
     private MainAdapter mMainAdapter;
 
+    private ImmersionBar mImmersionBar;
+
     @InjectPresenter
     ZhihuPresenter zhihuPresenter;
+
+    private BlurView blurView;
 
     @Override
     protected void initLayout(@Nullable Bundle savedInstanceState) {
@@ -33,18 +41,25 @@ public class MainActivity extends BaseActivity implements ZhihuContact.View {
 
     @Override
     protected void initViews() {
-        Button btn_zhihu = findViewById(R.id.btn_zhihu);
-        btn_zhihu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                zhihuPresenter.loadZhihu();
-            }
-        });
+
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.transparentBar();
+        mImmersionBar.init();
 
         RecyclerView rv_zhihu_list = findViewById(R.id.rv_zhihu_list);
         mMainAdapter = new MainAdapter();
         rv_zhihu_list.setLayoutManager(new LinearLayoutManager(this));
         rv_zhihu_list.setAdapter(mMainAdapter);
+
+        blurView = findViewById(R.id.blurView);
+
+        View decorView = getWindow().getDecorView();
+        ViewGroup rootView = decorView.findViewById(android.R.id.content);
+        blurView.setupWith(rootView)
+                .setFrameClearDrawable(decorView.getBackground())
+                .setBlurAlgorithm(new RenderScriptBlur(this))
+                .setBlurRadius(20f)//0<r<25  数值越大越模糊
+                .setHasFixedTransformationMatrix(true);
     }
 
     @Override

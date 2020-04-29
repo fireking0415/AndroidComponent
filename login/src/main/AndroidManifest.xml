@@ -3,7 +3,7 @@
     package="org.fireking.login">
 
     <application
-        android:name=".LoginApplication"
+        android:name="org.fireking.commons.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/login_login_ic_launcher"
         android:label="@string/login_app_name"
@@ -17,6 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="org.fireking.login.LoginAppDelegate"
+            android:value="ConfigModule" />
     </application>
 
 </manifest>

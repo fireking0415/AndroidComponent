@@ -7,14 +7,9 @@ import com.alibaba.android.arouter.launcher.ARouter;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseApplication extends Application {
+public class BaseApplication extends Application {
 
-    private List<Class<? extends IApplicationDelegate>> classInitList = new ArrayList<>();
     private List<IApplicationDelegate> appInitList = new ArrayList<>();
-
-    protected void registerApplicationInit(Class<? extends IApplicationDelegate> classInit) {
-        classInitList.add(classInit);
-    }
 
     @Override
     public void onCreate() {
@@ -27,19 +22,13 @@ public abstract class BaseApplication extends Application {
         // 尽可能早，推荐在Application中初始化
         ARouter.init(this);
 
-        registerApplicationDelegate();
-        for (Class<? extends IApplicationDelegate> classInit : classInitList) {
-            try {
-                IApplicationDelegate appInit = classInit.newInstance();
-                appInitList.add(appInit);
-                appInit.onCreate(this);
-            } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
+        ManifestParser manifestParser = new ManifestParser(this);
+        List<IApplicationDelegate> delegateList = manifestParser.parse();
+        for (IApplicationDelegate delegate : delegateList) {
+            appInitList.add(delegate);
+            delegate.onCreate(this);
         }
     }
-
-    public abstract void registerApplicationDelegate();
 
     @Override
     public void onTerminate() {

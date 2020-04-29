@@ -4,6 +4,10 @@
 
     <application>
         <activity android:name=".ui.MainActivity" />
+
+        <meta-data
+            android:name="org.fireking.login.LoginAppDelegate"
+            android:value="ConfigModule" />
     </application>
 
 </manifest>

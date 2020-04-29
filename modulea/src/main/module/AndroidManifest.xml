@@ -4,6 +4,10 @@
 
     <application>
         <activity android:name=".ui.MainActivity" />
+
+        <meta-data
+            android:name="org.fireking.modulea.ModelAAppDelegate"
+            android:value="ConfigModule" />
     </application>
 
 </manifest>
